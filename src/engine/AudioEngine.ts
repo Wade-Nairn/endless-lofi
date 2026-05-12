@@ -203,6 +203,7 @@ export class AudioEngine {
 
   pause(): void {
     Tone.getTransport().pause();
+    this.vinylCrackle.stop();
     this.state.isPlaying = false;
     this._notify();
   }
@@ -210,6 +211,7 @@ export class AudioEngine {
   async resume(): Promise<void> {
     await Tone.start();
     this.melodyEngine.start();
+    this.vinylCrackle.start();
     Tone.getTransport().start();
     this.state.isPlaying = true;
     this._notify();
