@@ -1,5 +1,0 @@
-/piano/*.mp3
-  Cache-Control: public, max-age=31536000, immutable
-
-/drums/*.mp3
-  Cache-Control: public, max-age=31536000, immutable
