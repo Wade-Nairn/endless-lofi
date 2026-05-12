@@ -1,0 +1,89 @@
+---
+import Player from "../components/Player.vue";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>endless lofi</title>
+    <meta name="description" content="A procedural lofi music generator that runs entirely in the browser. No loops — chords, melody, and drums generated in real-time." />
+
+    <!-- Open Graph -->
+    <meta property="og:type"        content="website" />
+    <meta property="og:title"       content="endless lofi" />
+    <meta property="og:description" content="A procedural lofi music generator that runs entirely in the browser. No loops — chords, melody, and drums generated in real-time." />
+    <meta property="og:url"         content="https://endless-lofi.vercel.app" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card"        content="summary" />
+    <meta name="twitter:title"       content="endless lofi" />
+    <meta name="twitter:description" content="A procedural lofi music generator that runs entirely in the browser." />
+
+    <!-- Mobile -->
+    <meta name="theme-color" content="#0a0a0f" />
+    <style>
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html, body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #0a0a0f;
+      }
+
+      .bg {
+        position: fixed;
+        inset: -10%;
+        width: 120%;
+        height: 120%;
+        background-image: url("https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1600&q=80");
+        background-size: cover;
+        background-position: center;
+        filter: brightness(0.35) saturate(0.7);
+        animation: kenburns 30s ease-in-out infinite alternate;
+        will-change: transform;
+      }
+
+      @keyframes kenburns {
+        0%   { transform: scale(1.0) translate(0%, 0%); }
+        25%  { transform: scale(1.06) translate(-1%, 1%); }
+        50%  { transform: scale(1.04) translate(1%, -0.5%); }
+        75%  { transform: scale(1.08) translate(-0.5%, 0.5%); }
+        100% { transform: scale(1.05) translate(0.5%, -1%); }
+      }
+
+      .overlay {
+        position: fixed;
+        inset: 0;
+        background: radial-gradient(ellipse at 50% 60%, rgba(80, 40, 120, 0.18) 0%, transparent 70%);
+        pointer-events: none;
+      }
+
+      .center {
+        position: relative;
+        z-index: 10;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg" aria-hidden="true"></div>
+    <div class="overlay" aria-hidden="true"></div>
+    <div class="center">
+      <Player client:only="vue" />
+    </div>
+  </body>
+</html>
