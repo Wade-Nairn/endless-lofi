@@ -5,7 +5,6 @@ import { ChordEngine } from "./ChordEngine.js";
 import { MelodyEngine } from "./MelodyEngine.js";
 import { BassEngine } from "./BassEngine.js";
 import { DrumEngine } from "./DrumEngine.js";
-import { VinylCrackle } from "./VinylCrackle.js";
 import { AutoDJ } from "./AutoDJ.js";
 import { EffectsChain } from "./EffectsChain.js";
 
@@ -35,7 +34,6 @@ export class AudioEngine {
   private melodyEngine!: MelodyEngine;
   private bassEngine!: BassEngine;
   private drumEngine!: DrumEngine;
-  private vinylCrackle!: VinylCrackle;
   private autoDJ!: AutoDJ;
 
   // Piano chain — connects directly to Tone.getDestination(), no master bus
@@ -81,8 +79,6 @@ export class AudioEngine {
     this.melodyEngine = new MelodyEngine();
     this.bassEngine   = new BassEngine();
     this.drumEngine   = new DrumEngine();
-    this.vinylCrackle = new VinylCrackle();
-
     await Promise.all([
       new Promise<void>((resolve) => {
         this.piano = new Tone.Sampler({
@@ -194,7 +190,6 @@ export class AudioEngine {
     await Tone.start();
     this.drumEngine.start();
     this.melodyEngine.start();
-    this.vinylCrackle.start();
     this.chordSeq.start(0);
     Tone.getTransport().start();
     this.state.isPlaying = true;
@@ -203,7 +198,6 @@ export class AudioEngine {
 
   pause(): void {
     Tone.getTransport().pause();
-    this.vinylCrackle.stop();
     this.state.isPlaying = false;
     this._notify();
   }
@@ -211,7 +205,6 @@ export class AudioEngine {
   async resume(): Promise<void> {
     await Tone.start();
     this.melodyEngine.start();
-    this.vinylCrackle.start();
     Tone.getTransport().start();
     this.state.isPlaying = true;
     this._notify();
@@ -220,7 +213,6 @@ export class AudioEngine {
   stop(): void {
     Tone.getTransport().stop();
     this.drumEngine.stop();
-    this.vinylCrackle.stop();
     this.melodyEngine.stop();
     this.bassEngine.stop();
     this.chordSeq?.stop();
@@ -265,7 +257,6 @@ export class AudioEngine {
     this.melodyEngine.dispose();
     this.bassEngine.dispose();
     this.drumEngine.dispose();
-    this.vinylCrackle.dispose();
     this.piano?.dispose();
     this.pianoLPF?.dispose();
     this.pianoWidener?.dispose();
